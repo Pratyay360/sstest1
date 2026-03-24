@@ -1,10 +1,11 @@
+version: "3.8"
+
 services:
-  test:
-    image: docker.io/oven/bun:latest
-    container_name: test
-    volumes:
-      - .:/app:Z
-    working_dir: /app
-    ports:
-      - "9000:5173"
-    command: ["sh", "-c", "bun install && bun run dev --host 0.0.0.0"]
+  build:
+    context: .
+    container_name: { env.repo_name }
+    name: { env.repo_name }
+    dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
